@@ -1,115 +1,231 @@
+/* Premium Real-Time Tracking UI */
+
 .tracking-page {
   position: relative;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   margin-top: -80px; /* Counteract main-content margin for full screen map */
   padding-top: 80px;
   overflow: hidden;
+  background-color: #0B0B0B;
 }
 
+/* Background Interactive Map Layer */
 .map-container {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(circle at center, #1a1a24 0%, #0a0a0c 100%);
+  background: radial-gradient(circle at center, rgba(30, 30, 40, 0.4) 0%, #0B0B0B 100%);
 }
 
-.map-grid {
-  position: absolute;
-  inset: 0;
+.parallax-grid {
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  transform: perspective(500px) rotateX(45deg);
-  transform-origin: top;
-  opacity: 0.5;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  transition: transform 0.1s ease;
 }
 
 .route-svg {
   position: absolute;
-  top: 0;
+  top: 10%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 80%;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
 }
 
-.route-svg path {
-  animation: dash 2s linear infinite;
+.path-base {
+  opacity: 0.5;
 }
 
-@keyframes dash {
-  to {
-    stroke-dashoffset: -20;
-  }
+.path-active {
+  box-shadow: 0 0 20px #FF6B00;
+  filter: drop-shadow(0 0 10px rgba(255,107,0,0.8));
 }
 
-.delivery-icon {
+.route-wrapper {
   position: absolute;
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
+  top: 10%;
+  left: 50%;
+  width: 1200px;
+  height: 500px;
+  transform: translateX(-50%) scale(1);
+  transform-origin: top center;
+  z-index: 5;
+}
+
+/* Rider Node Geometry Engine */
+.rider-node {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  margin-left: -30px;
+  z-index: 5;
+  offset-rotate: auto; /* Automatically aims rider across bezier vectors */
+}
+
+.rider-pulse {
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  margin: -25px 0 0 -25px; /* Offset for center */
-  box-shadow: 0 0 30px rgba(255, 77, 0, 0.4);
+  background: rgba(255,107,0,0.2);
+  animation: radar-pulse 2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes radar-pulse {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.rider-icon-wrapper {
+  position: relative;
   z-index: 2;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8F00 100%);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 5px 15px rgba(255,107,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.destination-pin {
+.destination-node {
   position: absolute;
-  margin: -30px 0 0 -15px;
-  z-index: 1;
+  right: -5px; /* End of route SVG geometry (1200x500 local coords) */
+  top: calc(10% + 250px);
+  z-index: 4;
 }
 
+/* Tracking Toast */
+.tracking-toast {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border-bottom: 2px solid #FF6B00;
+}
+
+/* Tracking Card */
 .tracking-panel {
   position: absolute;
   bottom: 2rem;
   left: 3rem;
-  width: 400px;
-  padding: 2rem;
+  width: 420px;
+  padding: 2.5rem;
   z-index: 10;
-  background: rgba(20, 20, 25, 0.85);
+  border-radius: 30px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
 }
 
-.eta-header h2 {
-  font-size: 2.5rem;
-  margin-top: 0.5rem;
+.eta-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.progress-bar-bg {
-  width: 100%;
-  height: 6px;
-  background: var(--bg-darker);
-  border-radius: var(--border-radius-pill);
+.eta-live h2 {
+  font-size: 3rem;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background: #00e676;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00e676;
+  animation: blink 1.5s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+.partner-card {
+  padding: 1rem 1.2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.premium-glass-light {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.partner-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.1);
 }
 
-.progress-bar-fill {
+.partner-avatar img {
+  width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, var(--primary-neon), var(--accent-yellow));
-  border-radius: var(--border-radius-pill);
-  transition: width 0.2s ease;
-  box-shadow: 0 0 10px var(--primary-glow);
+  object-fit: cover;
 }
 
-.timeline {
+.partner-details h4 {
+  margin: 0 0 0.2rem 0;
+}
+
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-circle.call {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+}
+
+.btn-circle.call:hover {
+  background: #00e676;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+}
+
+.btn-circle.chat {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.btn-circle.chat:hover {
+  background: white;
+  color: black;
+}
+
+/* Timeline Dynamic UI */
+.timeline-dynamic {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin-top: 2rem;
 }
 
-.timeline-step {
+.time-step {
   display: flex;
   gap: 1.5rem;
-  opacity: 0.4;
-  transition: all 0.3s;
 }
 
-.timeline-step.active {
-  opacity: 1;
-}
-
-.step-indicator {
+.step-geo {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -117,117 +233,123 @@
 }
 
 .dot {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: var(--bg-darker);
-  border: 2px solid var(--text-secondary);
+  background: #252525;
+  border: 2px solid rgba(255,255,255,0.3);
   z-index: 2;
-  transition: all 0.3s;
+  transition: all 0.4s ease;
 }
 
-.timeline-step.active .dot {
-  background: var(--primary-neon);
-  border-color: var(--primary-neon);
-  box-shadow: 0 0 10px rgba(255, 77, 0, 0.5);
+.time-step.completed .dot {
+  background: #FF6B00;
+  border-color: #FF6B00;
+}
+
+.time-step.active .dot {
+  background: none;
+  border: 3px solid #FF6B00;
+  background: rgba(255,107,0,0.2);
 }
 
 .line {
   position: absolute;
-  top: 16px;
+  top: 18px;
   bottom: -1.5rem;
   width: 2px;
-  background: var(--bg-darker);
+  background: rgba(255,255,255,0.1);
   z-index: 1;
+  transition: background 0.4s;
 }
 
-.timeline-step.active .line {
-  background: var(--primary-neon);
+.time-step.completed .line {
+  background: linear-gradient(180deg, #FF6B00 0%, rgba(255,107,0,0.2) 100%);
 }
 
-.step-content h4 {
+.step-text h4 {
   font-size: 1.1rem;
-  margin-bottom: 0.2rem;
+  margin: 0 0 0.3rem 0;
+  transition: color 0.3s;
 }
 
-.step-content p {
-  font-size: 0.85rem;
+.step-text p {
+  margin: 0;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
-.driver-card {
-  padding: 1rem;
-  border-radius: var(--border-radius-xl);
+/* Tracking Mobile Limits */
+@media (max-width: 1200px) {
+  .route-wrapper {
+    transform: translateX(-50%) scale(0.8);
+  }
 }
 
-.driver-avatar {
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-}
-
-.driver-info h4 {
-  margin-bottom: 0.2rem;
-}
-
-.driver-info p {
-  font-size: 0.8rem;
-}
-
-.btn-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: var(--bg-darker);
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-icon:hover {
-  background: var(--primary-neon);
-}
-
-.btn-call {
-  background: rgba(0, 230, 118, 0.2);
-  color: var(--accent-green);
-}
-
-.btn-call:hover {
-  background: var(--accent-green);
-  color: white;
-}
-
-/* Tracking Responsiveness */
 @media (max-width: 900px) {
-  .tracking-page {
-    /* If stacking on mobile needed */
+  .route-wrapper {
+    transform: translateX(-50%) scale(0.65);
+    top: 5%;
   }
 
   .tracking-panel {
     bottom: 0;
     left: 0;
     width: 100%;
-    border-radius: 24px 24px 0 0;
-    padding: 1.5rem;
+    border-radius: 30px 30px 0 0;
+    padding: 1.5rem 5%;
   }
 }
 
 @media (max-width: 600px) {
-  .eta-header h2 {
-    font-size: 2rem;
+  .route-wrapper {
+    transform: translateX(-50%) scale(0.4);
+    top: -5%;
   }
-  .driver-card {
-    flex-direction: column;
+  
+  .tracking-panel {
+    padding: 1.2rem 1.5rem;
+  }
+  
+  .eta-live h2 {
+    font-size: 2.2rem;
+  }
+  
+  .tracking-toast {
+    top: 60px;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+    width: 90%;
+    max-width: 280px;
+    text-align: center;
+    border-bottom: 2px solid #FF6B00;
+  }
+  
+  .partner-card {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+  }
+
+  .partner-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .btn-circle {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .timeline-dynamic {
     gap: 1rem;
+    margin-top: 1.2rem;
+  }
+  
+  .step-text h4 {
+    font-size: 1rem;
+  }
+  
+  .step-text p {
+    font-size: 0.8rem;
   }
 }

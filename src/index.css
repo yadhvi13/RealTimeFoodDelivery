@@ -11,6 +11,7 @@
   
   --primary-neon: #FF6B00; /* Mandatory specific Orange */
   --primary-glow: rgba(255, 107, 0, 0.5);
+  --accent-yellow: #FFB800; /* Reintroduced for broken button gradients */
   --accent-cyan: #00E5FF;
   --accent-mint: #00e676;
   
@@ -39,12 +40,18 @@
   box-sizing: border-box;
 }
 
+html, #root {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-dark);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  max-width: 100vw;
   -webkit-font-smoothing: antialiased;
   background-image: 
     radial-gradient(circle at 15% 50%, rgba(255, 77, 0, 0.08), transparent 25%),

@@ -91,28 +91,69 @@ const RestaurantList = () => {
       transition={{ duration: 0.5 }}
     >
       {/* Ultra Premium Next-Gen Hero Banner */}
-      <section className="hero-banner glass-panel">
+      <section className="hero-banner">
         <div className="hero-blur-bg"></div>
-        <div className="hero-overlay"></div>
+        <div className="hero-overlay-dark"></div>
         
         <motion.div 
-          className="hero-content glass-panel-light"
-          initial={{ y: 50, opacity: 0, filter: 'blur(10px)' }}
-          animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          className="hero-content-premium"
+          initial={{ y: 30, opacity: 0, scale: 0.95 }}
+          animate={{ 
+            y: [0, -3, 0], 
+            opacity: 1, 
+            scale: 1 
+          }}
+          transition={{ 
+            y: { duration: 6, ease: "easeInOut", repeat: Infinity },
+            opacity: { duration: 0.8 },
+            scale: { duration: 0.8 }
+          }}
+          whileHover={{ translateY: -6, boxShadow: "0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2), 0 0 40px rgba(255,107,0,0.15)" }}
         >
-          <div className="hero-badge flex-center">Featured</div>
-          <h1 className="hero-title text-gradient">Gourmet Haven</h1>
-          <div className="hero-meta flex-center gap-2">
-            <span className="rating"><Star size={18} fill="var(--accent-yellow)"/> 4.9 Superb</span>
+          <div className="hero-shimmer"></div>
+          
+          <motion.div 
+            className="hero-badge flex-center pulse-glow"
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+          >
+            FEATURED
+          </motion.div>
+          
+          <motion.h1 
+            className="hero-title-premium"
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+          >
+            Gourmet Haven
+          </motion.h1>
+          
+          <motion.div 
+            className="hero-meta flex-center gap-2"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+          >
+            <span className="rating"><Star size={16} fill="white" className="icon-star"/> 4.9 Superb</span>
             <span className="dot">•</span>
             <span className="time"><Clock size={16}/> 15-25 min</span>
-          </div>
+          </motion.div>
           
-          <div className="hero-actions">
-            <button className="btn-glass flex-center"><Heart size={18}/> Favorite Menu</button>
-            <button className="btn-glass flex-center">Share</button>
-          </div>
+          <motion.div 
+            className="hero-actions"
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+          >
+            <motion.button 
+              className="btn-premium-glass flex-center"
+              whileHover={{ y: -4, boxShadow: '0 0 15px rgba(255,107,0,0.4)', borderColor: 'rgba(255,107,0,0.5)' }}
+              whileTap={{ scale: 0.96 }}
+            >
+              <Heart size={16}/> Favorite Menu
+            </motion.button>
+            <motion.button 
+              className="btn-premium-glass flex-center"
+              whileHover={{ y: -4, boxShadow: '0 0 15px rgba(255,107,0,0.4)', borderColor: 'rgba(255,107,0,0.5)' }}
+              whileTap={{ scale: 0.96 }}
+            >
+              Share
+            </motion.button>
+          </motion.div>
         </motion.div>
       </section>
 

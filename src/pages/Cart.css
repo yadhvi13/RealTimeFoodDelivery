@@ -219,6 +219,10 @@
 /* Empty State / Success State */
 .empty-cart-state {
   height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   gap: 1rem;
 }
@@ -260,7 +264,16 @@
   margin-bottom: 0.5rem;
 }
 
-/* Responsive */
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .cart-layout {
+    gap: 2rem;
+  }
+  .checkout-section {
+    width: 360px;
+  }
+}
+
 @media (max-width: 900px) {
   .cart-layout {
     flex-direction: column;
@@ -268,15 +281,51 @@
   .checkout-section {
     width: 100%;
     position: static;
+    margin-bottom: 3rem;
   }
 }
 
 @media (max-width: 600px) {
   .cart-item {
     flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.2rem;
+  }
+  .item-visual-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+  .item-details h3 {
+    font-size: 1.1rem;
   }
   .item-actions {
     width: 100%;
     justify-content: flex-end;
+    padding-right: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05); /* clean separator */
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-page {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .cart-items-section h2 {
+    font-size: 1.6rem;
+  }
+  /* Optimize touch target scaling for tiny screens */
+  .qty-pill button {
+    width: 36px;
+    height: 36px;
+  }
+  .btn-delete {
+    width: 44px;
+    height: 44px;
+  }
+  .success-content {
+    padding: 2.5rem 1rem;
+    width: 90%;
   }
 }

@@ -5,23 +5,77 @@ import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
 const MinimalSearch = () => {
+  const navigate = useNavigate();
   const [isFocused, setIsFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const suggestions = [
+    { name: "Spicy Tuna Roll", cat: "Sushi" },
+    { name: "Double Cheeseburger", cat: "Burgers" },
+    { name: "Pepperoni Pizza", cat: "Pizza" },
+    { name: "Chicken Tikka Masala", cat: "Indian" },
+    { name: "Avocado Toast", cat: "Healthy" },
+    { name: "Chocolate Lava Cake", cat: "Desserts" }
+  ];
+
+  const filtered = suggestions.filter(s => 
+    s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    s.cat.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <motion.div 
-      className={`search-container premium-glass ${isFocused ? 'focused' : ''}`}
-      animate={{ scale: isFocused ? 1.02 : 1 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-    >
-      <Search size={20} className="search-icon" />
-      <input 
-        type="text" 
-        placeholder="What are you craving today?"
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      />
-      <button className="btn-primary search-btn">Find Food</button>
-    </motion.div>
+    <div className="search-wrapper-relative">
+      <motion.div 
+        className={`search-container premium-glass ${isFocused ? 'focused' : ''}`}
+        animate={{ scale: isFocused ? 1.02 : 1 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      >
+        <Search size={20} className="search-icon" />
+        <input 
+          type="text" 
+          placeholder="What are you craving today?"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+        />
+        <button 
+          className="btn-primary search-btn"
+          onClick={() => navigate('/restaurants')}
+        >
+          Find Food
+        </button>
+      </motion.div>
+
+      <AnimatePresence>
+        {(isFocused && searchQuery.length > 0) && (
+          <motion.div 
+            className="search-suggestions premium-glass"
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+          >
+            {filtered.length > 0 ? (
+              filtered.map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="suggestion-item flex-between"
+                  onClick={() => navigate('/restaurants')}
+                >
+                  <span className="sugg-name">{item.name}</span>
+                  <span className="sugg-cat text-secondary">{item.cat}</span>
+                </div>
+              ))
+            ) : (
+              <div className="suggestion-item text-secondary flex-center py-4">
+                No menus found for "{searchQuery}"
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
