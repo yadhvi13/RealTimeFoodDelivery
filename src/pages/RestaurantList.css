@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2rem;
+  min-height: calc(100vh - 100px);
 }
 
 /* Hero Banner Ultra Glassmorphism */
@@ -179,9 +185,16 @@
 
 .dishes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.5rem;
   width: 100%;
+}
+
+.dishes-grid.with-filters {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.dishes-grid.no-filters {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .dish-card {
@@ -435,7 +448,9 @@
 }
 
 @media (max-width: 600px) {
-  .dishes-grid {
+  .dishes-grid,
+  .dishes-grid.with-filters,
+  .dishes-grid.no-filters {
     grid-template-columns: 1fr;
   }
   

@@ -187,7 +187,7 @@ const RestaurantList = () => {
 
         <main className="dishes-main">
           {isLoading ? (
-            <div className="dishes-grid">
+            <div className={`dishes-grid ${showFilters ? 'with-filters' : 'no-filters'}`}>
               {[...Array(8)].map((_, i) => <SkeletonCard key={i} />)}
             </div>
           ) : filteredDishes.length === 0 ? (
@@ -199,7 +199,7 @@ const RestaurantList = () => {
               }}>Reset Filters</button>
             </div>
           ) : (
-            <motion.div layout className="dishes-grid">
+            <motion.div layout className={`dishes-grid ${showFilters ? 'with-filters' : 'no-filters'}`}>
               <AnimatePresence>
                 {filteredDishes.map((dish) => (
                   <motion.div 

@@ -57,6 +57,8 @@
 
 .nav-link:hover::after {
   width: 100%;
+}
+
 /* Global Responsiveness */
 @media (max-width: 768px) {
   .glass-nav {
