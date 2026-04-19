@@ -1,0 +1,233 @@
+.tracking-page {
+  position: relative;
+  height: calc(100vh - 80px);
+  margin-top: -80px; /* Counteract main-content margin for full screen map */
+  padding-top: 80px;
+  overflow: hidden;
+}
+
+.map-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at center, #1a1a24 0%, #0a0a0c 100%);
+}
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(500px) rotateX(45deg);
+  transform-origin: top;
+  opacity: 0.5;
+}
+
+.route-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.route-svg path {
+  animation: dash 2s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.delivery-icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  margin: -25px 0 0 -25px; /* Offset for center */
+  box-shadow: 0 0 30px rgba(255, 77, 0, 0.4);
+  z-index: 2;
+}
+
+.destination-pin {
+  position: absolute;
+  margin: -30px 0 0 -15px;
+  z-index: 1;
+}
+
+.tracking-panel {
+  position: absolute;
+  bottom: 2rem;
+  left: 3rem;
+  width: 400px;
+  padding: 2rem;
+  z-index: 10;
+  background: rgba(20, 20, 25, 0.85);
+}
+
+.eta-header h2 {
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-darker);
+  border-radius: var(--border-radius-pill);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-neon), var(--accent-yellow));
+  border-radius: var(--border-radius-pill);
+  transition: width 0.2s ease;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.timeline-step {
+  display: flex;
+  gap: 1.5rem;
+  opacity: 0.4;
+  transition: all 0.3s;
+}
+
+.timeline-step.active {
+  opacity: 1;
+}
+
+.step-indicator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-darker);
+  border: 2px solid var(--text-secondary);
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.timeline-step.active .dot {
+  background: var(--primary-neon);
+  border-color: var(--primary-neon);
+  box-shadow: 0 0 10px rgba(255, 77, 0, 0.5);
+}
+
+.line {
+  position: absolute;
+  top: 16px;
+  bottom: -1.5rem;
+  width: 2px;
+  background: var(--bg-darker);
+  z-index: 1;
+}
+
+.timeline-step.active .line {
+  background: var(--primary-neon);
+}
+
+.step-content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.step-content p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.driver-card {
+  padding: 1rem;
+  border-radius: var(--border-radius-xl);
+}
+
+.driver-avatar {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.driver-info h4 {
+  margin-bottom: 0.2rem;
+}
+
+.driver-info p {
+  font-size: 0.8rem;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-darker);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-icon:hover {
+  background: var(--primary-neon);
+}
+
+.btn-call {
+  background: rgba(0, 230, 118, 0.2);
+  color: var(--accent-green);
+}
+
+.btn-call:hover {
+  background: var(--accent-green);
+  color: white;
+}
+
+/* Tracking Responsiveness */
+@media (max-width: 900px) {
+  .tracking-page {
+    /* If stacking on mobile needed */
+  }
+
+  .tracking-panel {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .eta-header h2 {
+    font-size: 2rem;
+  }
+  .driver-card {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,306 @@
+/* Minimal, Premium, Futuristic Hero Styles */
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-bottom: 5rem;
+  position: relative;
+  background-color: #0B0B0B; /* Solid dark base */
+  min-height: 100vh;
+}
+
+/* Subtle radial gradient ONLY behind hero text */
+.home-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 107, 0, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-section {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  padding-top: 2rem;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  align-items: center;
+}
+
+/* LEFT SIDE - CONTENT */
+.hero-content-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 90%;
+}
+
+.hero-headline {
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -1.5px;
+  color: white;
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.5) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-orange {
+  background: linear-gradient(90deg, #FF6B00 0%, #FFB800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  max-width: 90%;
+  line-height: 1.6;
+  color: #A0A0A0; /* Subtle grey tone */
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Premium Minimal Search Container */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  max-width: 480px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.search-container.focused {
+  border-color: rgba(255, 107, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.1);
+}
+
+.search-container input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  outline: none;
+  font-family: var(--font-sans);
+}
+
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  transition: opacity 0.3s ease;
+}
+
+.search-container input:focus::placeholder {
+  opacity: 0.1;
+}
+
+.search-icon {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-btn {
+  border-radius: 999px;
+  padding: 0.8rem 1.8rem;
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8F00 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+}
+
+/* RIGHT SIDE - FLOATING VISUALS (CONTROLLED TRIANGLE) */
+.hero-visual-right {
+  position: relative;
+  height: 600px;
+  width: 100%;
+}
+
+.controlled-layout-triangle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Real Glassmorphism System */
+.premium-glass {
+  background: rgba(255, 255, 255, 0.05); /* very light */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05); /* very soft shadow, top highlight */
+}
+
+/* Premium Card Construction */
+.premium-card {
+  position: absolute;
+  width: 250px;
+  border-radius: 20px;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Exact Triangle Positions */
+.layout-pos-center {
+  top: 15%;
+  left: 20%;
+  z-index: 3;
+  width: 280px;
+}
+
+.layout-pos-top-right {
+  top: 0%;
+  right: 15%;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.layout-pos-bottom-right {
+  bottom: 25%;
+  right: 20%;
+  z-index: 2;
+  transform: scale(0.9);
+}
+
+.premium-card-img-wrapper {
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.premium-card-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.premium-card-body {
+  padding: 0.5rem;
+}
+
+.premium-card-body h4 { 
+  margin: 0; 
+  font-size: 1.1rem; 
+  font-weight: 500;
+  color: white;
+}
+
+.premium-card-body .price { 
+  font-weight: 600; 
+  color: #FF6B00; 
+}
+
+/* Categories Section - Clean */
+.categories-section-clean {
+  padding-top: 1rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.header-align {
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.header-align h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.categories-horizontal-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0.5rem;
+  /* Hide scrollbar */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
+.categories-horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-card-clean {
+  min-width: 120px;
+  padding: 1.5rem;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  flex-shrink: 0; /* Important for horizontal scrolling */
+}
+
+.cat-emoji {
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.category-card-clean h4 { 
+  margin: 0; 
+  font-size: 0.95rem; 
+  font-weight: 500;
+  color: white;
+}
+
+.category-card-clean:hover {
+  background: rgba(255, 255, 255, 0.08); /* slight brightness on hover */
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 4rem; }
+  .hero-visual-right { height: 450px; }
+  .layout-pos-center { left: 10%; }
+}
+
+@media (max-width: 768px) {
+  .hero-headline { font-size: 3.5rem; }
+  .layout-pos-center { left: 5%; width: 250px; }
+  .layout-pos-top-right { right: 0; }
+  .layout-pos-bottom-right { right: 0; bottom: 15%; }
+}
